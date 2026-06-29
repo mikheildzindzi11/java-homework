@@ -4,6 +4,7 @@ import ge.tbc.testautomation.javaoop.figures.Circle;
 
 public class Util {
     public static String circleToString(Circle circle) {
+
         return "[Circle: radius - " + (int) circle.getRadius() + "]";
     }
 }
