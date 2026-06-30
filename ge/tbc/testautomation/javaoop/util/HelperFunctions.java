@@ -1,6 +1,6 @@
-package ge.tbc.testautomation.util;
+package ge.tbc.testautomation.javaoop.util;
 
-import ge.tbc.testautomation.figures.Rectangle;
+import ge.tbc.testautomation.javaoop.figures.Rectangle;
 
 public class HelperFunctions {
 
