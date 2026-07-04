@@ -57,5 +57,9 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.out.println("Caught exception: " + e.getMessage());
         }
+
+        System.out.println();
+        double combinedArea = circle.getArea() + triangle.getArea();
+        System.out.printf("Combined area of all figures: %.2f%n", combinedArea);
     }
 }
