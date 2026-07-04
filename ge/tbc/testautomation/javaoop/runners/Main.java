@@ -59,6 +59,9 @@ public class Main {
         }
 
         System.out.println();
+        double combinedArea = circle.getArea() + triangle.getArea();
+        System.out.printf("Combined area of all figures: %.2f%n", combinedArea);
+
         double combinedLength = circle.getLength() + triangle.getLength();
         System.out.printf("Combined length of all figures: %.2f%n", combinedLength);
     }
