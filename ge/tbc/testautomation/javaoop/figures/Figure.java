@@ -1,17 +1,9 @@
 package ge.tbc.testautomation.javaoop.figures;
 
-public class Figure {
-    public static int numberOfInstances;
+public abstract class Figure {
+    public abstract double getArea();
 
-    public double getArea(){
-        return -1.0;
-    }
+    public abstract double getLength();
 
-    public double getPerimeter(){
-        return -1.0;
-    }
-
-    public Figure() {
-        numberOfInstances++;
-    }
+    public abstract void printPackageName();
 }

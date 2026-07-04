@@ -14,73 +14,48 @@ import ge.tbc.testautomation.exceptionsStringOperationsRegex.RadiusException;
 
 public class Main {
     public static void main(String[] args) {
-        // 7) წრეწირის შექმნა უარყოფითი რადიუსით -> RadiusException
+        System.out.println("=== Circle demo ===");
+        Circle circle = new Circle(5);
+        circle.printPackageName();
+        System.out.printf("Area: %.2f%n", circle.getArea());
+        System.out.printf("Length (circumference): %.2f%n", circle.getLength());
+        System.out.println("Is valid? " + circle.validateFigure());
+
+        circle.doubleSize();
+        System.out.printf("After doubleSize -> radius: %.2f, area: %.2f%n",
+                circle.getRadius(), circle.getArea());
+
+        circle.customSize(0.5);
+        System.out.printf("After customSize(0.5) -> radius: %.2f, area: %.2f%n",
+                circle.getRadius(), circle.getArea());
+
+        System.out.println();
+        System.out.println("=== Triangle demo ===");
+        Triangle triangle = new Triangle(3, 4, 5);
+        triangle.printPackageName();
+        System.out.printf("Area: %.2f%n", triangle.getArea());
+        System.out.printf("Length (perimeter): %.2f%n", triangle.getLength());
+        System.out.println("Is valid? " + triangle.validateFigure());
+
+        triangle.doubleSize();
+        System.out.printf("After doubleSize -> perimeter: %.2f, area: %.2f%n",
+                triangle.getLength(), triangle.getArea());
+
+        triangle.customSize(0.5);
+        System.out.printf("After customSize(0.5) -> perimeter: %.2f, area: %.2f%n",
+                triangle.getLength(), triangle.getArea());
+
+
         try {
-            Circle invalidCircle = new Circle(-5);
-        } catch (RadiusException e) {
-            System.out.println(e.getMessage());
+            Circle invalidCircle = new Circle(-3);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Caught exception: " + e.getMessage());
         }
 
-        // 8) ობიექტების დაინსტანცირება, სანამ ლიმიტს მიაღწევს (LimitException)
         try {
-            for (int i = 1; i <= 10; i++) {
-                Circle circle = new Circle(i);
-                System.out.println("Circle #" + i + " created, radius = " + circle.getRadius());
-            }
-        } catch (LimitException e) {
-            System.out.println(e.getMessage());
+            Triangle invalidTriangle = new Triangle(1, 1, 10);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Caught exception: " + e.getMessage());
         }
-
-        System.out.println("-----------------------------------");
-
-        // 9) სტრინგული ოპერაციები
-        String sentence = "Test Automation Bootcamp 12, 2025";
-
-        // მხოლოდ "Automation" სიტყვის დაბეჭდვა დაბალ რეგისტრში
-        String[] wordsForExtraction = sentence.split(" ");
-        String automationWord = wordsForExtraction[1].toLowerCase();
-        System.out.println(automationWord);
-
-        // წინადადების სტრიქონების მასივად გადაქცევა და თითო სიტყვის ცალ-ცალკე ხაზზე დაბეჭდვა
-        String[] words = sentence.split(" ");
-        for (String word : words) {
-            System.out.println(word);
-        }
-
-        // წინადადების სიგრძის დაბეჭდვა
-        System.out.println("Sentence length: " + sentence.length());
-
-        // ყველა space-ის ჩანაცვლება ტირეთი
-        String dashed = sentence.replace(" ", "-");
-        System.out.println(dashed);
-
-        System.out.println("-----------------------------------");
-
-        // 11) ტელეფონის ნომრების მასივი (ვალიდური და არავალიდური)
-        String[] phoneNumbers = {
-                "599-14-15-16",   // ვალიდური
-                "555-11-22-33",   // ვალიდური
-                "595-99-88-77",   // ვალიდური
-                "592-00-11-22",   // ვალიდური
-                "111-14-15-16",   // არავალიდური პრეფიქსი
-                "599-14-15",      // არავალიდური, ცოტა ციფრია
-                "599-14-15-166",  // არავალიდური, ბევრი ციფრია
-                "599-1a-15-16"    // არავალიდური, შეიცავს ასოს
-        };
-
-        // 12) ვალიდაციის გაშვება მასივის თითოეულ ელემენტზე
-        for (String phoneNumber : phoneNumbers) {
-            boolean isValid = phoneNumberValidation(phoneNumber);
-            System.out.println(phoneNumber + " -> " + (isValid ? "VALID" : "INVALID"));
-        }
-    }
-
-    // 10) ტელეფონის ნომრის ვალიდაციის ფუნქცია
-    private static boolean phoneNumberValidation(String phoneNumber) {
-        // 13) ყველა დეფისის მოშორება რეგექსის გამოყენებამდე
-        String cleanNumber = phoneNumber.replace("-", "");
-
-        String regex = "^(555|595|592|599)[0-9]{6}$";
-        return cleanNumber.matches(regex);
     }
 }

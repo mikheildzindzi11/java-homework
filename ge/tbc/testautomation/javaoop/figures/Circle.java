@@ -1,25 +1,21 @@
 package ge.tbc.testautomation.javaoop.figures;
 
+import ge.tbc.testautomation.abstractClassesInterfaces.interfaces.IResizable;
+import ge.tbc.testautomation.abstractClassesInterfaces.interfaces.IValidFigure;
 import ge.tbc.testautomation.exceptionsStringOperationsRegex.LimitException;
 import ge.tbc.testautomation.exceptionsStringOperationsRegex.RadiusException;
 
-public class Circle extends Figure {
+public class Circle extends Figure implements IResizable, IValidFigure {
     private double radius;
     public static int numberOfCircleInstances = 0;
 
     public Circle(double radius) {
-        super();
-
-        if (numberOfInstances > 5) {
-            throw new LimitException("INSTANTIATION LIMIT REACHED");
-        }
-
-        if (radius <= 0) {
-            throw new RadiusException("RADIUS VALUE NOT VALID");
-        }
-
         this.radius = radius;
-        numberOfCircleInstances++;
+
+        // validation
+        if (!validateFigure()) {
+            throw new IllegalArgumentException("Invalid circle: radius must be positive. Got: " + radius);
+        }
     }
 
     public double getRadius() {
@@ -28,5 +24,35 @@ public class Circle extends Figure {
 
     public void setRadius(double radius) {
         this.radius = radius;
+    }
+
+    @Override
+    public double getArea() {
+        return Math.PI * radius * radius;
+    }
+
+    @Override
+    public double getLength() {
+        return 2 * Math.PI * radius;
+    }
+
+    @Override
+    public void printPackageName() {
+        System.out.println(this.getClass().getPackage().getName());
+    }
+
+    @Override
+    public void doubleSize() {
+        radius *= 2;
+    }
+
+    @Override
+    public void customSize(double byValue) {
+        radius *= byValue;
+    }
+
+    @Override
+    public boolean validateFigure() {
+        return radius > 0;
     }
 }
