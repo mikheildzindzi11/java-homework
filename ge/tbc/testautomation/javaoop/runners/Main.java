@@ -57,5 +57,9 @@ public class Main {
         } catch (IllegalArgumentException e) {
             System.out.println("Caught exception: " + e.getMessage());
         }
+
+        System.out.println();
+        double combinedLength = circle.getLength() + triangle.getLength();
+        System.out.printf("Combined length of all figures: %.2f%n", combinedLength);
     }
 }
