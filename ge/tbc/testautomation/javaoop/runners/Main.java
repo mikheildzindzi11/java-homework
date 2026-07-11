@@ -11,59 +11,42 @@ import ge.tbc.testautomation.javaoop.util.HelperFunctions;
 
 import ge.tbc.testautomation.exceptionsStringOperationsRegex.LimitException;
 import ge.tbc.testautomation.exceptionsStringOperationsRegex.RadiusException;
-
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
 import ge.tbc.testautomation.annotationsAndStreams.Analyzable;
 import ge.tbc.testautomation.annotationsAndStreams.VariableNameAnnotation;
 
+import java.lang.reflect.Field;
+import ge.tbc.testautomation.generics.AnyPair;
+import ge.tbc.testautomation.generics.FigurePair;
+
 public class Main {
 
     @SuppressWarnings("unused")
     public static void main(String[] args) {
-        Field[] fields = Analyzable.class.getDeclaredFields();
+        Integer someInteger = 100;
+        String someString = "Hello";
 
-        List<Field> matchingFields = Arrays.stream(fields)
-                .filter(field -> {
-                    VariableNameAnnotation annotation = field.getAnnotation(VariableNameAnnotation.class);
-                    String capitalizedName = capitalize(field.getName());
-                    return capitalizedName.equals(annotation.name());
-                })
-                .toList();
+        AnyPair<Field[], Field[]> fieldsPair = getDeclaredFields(someInteger, someString);
 
-        List<Field> nonMatchingFields = Arrays.stream(fields)
-                .filter(field -> {
-                    VariableNameAnnotation annotation = field.getAnnotation(VariableNameAnnotation.class);
-                    String capitalizedName = capitalize(field.getName());
-                    return !capitalizedName.equals(annotation.name());
-                })
-                .toList();
+        List<Field> integerFields = Arrays.asList(fieldsPair.getElementOne());
+        List<Field> stringFields = Arrays.asList(fieldsPair.getElementTwo());
 
-        System.out.println("=== ემთხვევა ანოტაციის name-ს (" + matchingFields.size() + ") ===");
-        matchingFields.forEach(field -> {
-            VariableNameAnnotation annotation = field.getAnnotation(VariableNameAnnotation.class);
-            System.out.printf("ველი: %-20s ანოტაციის name: %s%n", field.getName(), annotation.name());
-        });
+        System.out.println("Integer fields: " + integerFields);
+        System.out.println("String fields: " + stringFields);
 
-        System.out.println("\n=== არ ემთხვევა ანოტაციის name-ს (" + nonMatchingFields.size() + ") ===");
-        nonMatchingFields.forEach(field -> {
-            VariableNameAnnotation annotation = field.getAnnotation(VariableNameAnnotation.class);
-            System.out.printf("ველი: %-20s ანოტაციის name: %s%n", field.getName(), annotation.name());
-        });
+        Circle circle = new Circle(5.0);
+        Rectangle rectangle = new Rectangle(4.0, 6.0);
 
-        // მე-7: სხვადასხვა ტიპის გამოუყენებელი ცვლადები, warning-ის გარეშე
-        int unusedNumber = 10;
-        String unusedText = "hello";
-        boolean unusedFlag = true;
-        double unusedPrice = 99.99;
+        FigurePair<Circle, Rectangle> figurePair = new FigurePair<>(circle, rectangle);
+
+        System.out.println(figurePair);
     }
 
-    private static String capitalize(String value) {
-        if (value == null || value.isEmpty()) {
-            return value;
-        }
-        return Character.toUpperCase(value.charAt(0)) + value.substring(1);
+    private static <K, D> AnyPair<Field[], Field[]> getDeclaredFields(K objOne, D objTwo) {
+        Field[] fieldsOne = objOne.getClass().getDeclaredFields();
+        Field[] fieldsTwo = objTwo.getClass().getDeclaredFields();
+        return new AnyPair<>(fieldsOne, fieldsTwo);
     }
 }
